@@ -1,0 +1,29 @@
+
+////virtual roster has a 10 minute timeout//
+
+//clicks 'EO List' and 'Submit' when called//
+function eolist() {
+  btn_eolist=document.getElementsByClassName('btn btn-default widest pull-right di_eo_list');
+  btn_eolist[0].click();
+  console.log('1');
+
+  btn_submit=document.getElementsByClassName('btn di_submit di_green btn-primary');
+  btn_submit[0].click()
+  console.log('2');
+}
+
+// Define the specific time at which you want to call the function
+const specificTime = new Date("February 17, 2024 09:45:00").getTime(); // Adjust the date and time as needed
+
+// Get the current time
+const currentTime = new Date().getTime();
+
+// Calculate the time difference
+const timeDifference = specificTime - currentTime;
+
+// Call the function after the time difference elapses
+if (timeDifference > 0) {
+    setTimeout(eolist, timeDifference);
+} else {
+    console.log("Specified time has already passed.");
+}
