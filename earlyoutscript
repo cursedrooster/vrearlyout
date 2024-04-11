@@ -1,29 +1,39 @@
+//https://scheduling.mgmresorts.com/m/default.aspx?mobile=yes&p=roster
+//login to mobile virtual roster using the link above
+//click the day the eo list will be available
+//open up the console, probably ctrl+shift+i
+//copy and paste this entire code to the console
+//adjust the current.Date.setHours to the time the EO list will be available. 
 
-////virtual roster has a 10 minute timeout//
+//window.history.back();
+//return to previous page
 
-//clicks 'EO List' and 'Submit' when called//
-function eolist() {
-  btn_eolist=document.getElementsByClassName('btn btn-default widest pull-right di_eo_list');
-  btn_eolist[0].click();
-  console.log('1');
+//location.reload();
+//refreshes the current page
 
-  btn_submit=document.getElementsByClassName('btn di_submit di_green btn-primary');
-  btn_submit[0].click()
-  console.log('2');
-}
+// Get the current date
+var currentDate = new Date();
 
-// Define the specific time at which you want to call the function
-const specificTime = new Date("February 17, 2024 09:45:00").getTime(); // Adjust the date and time as needed
+// Set the time to noon (12:00:00)
+currentDate.setHours(12, 0, 0, 0);
 
-// Get the current time
-const currentTime = new Date().getTime();
+// Calculate the time difference between the current time and noon
+var timeDifference = currentDate.getTime() - Date.now();
 
-// Calculate the time difference
-const timeDifference = specificTime - currentTime;
+// Start the countdown timer
+var eolist = setTimeout(function() {
+    // Execute the code
+    document.querySelector('.action_eo_list').click();
 
-// Call the function after the time difference elapses
-if (timeDifference > 0) {
-    setTimeout(eolist, timeDifference);
-} else {
-    console.log("Specified time has already passed.");
-}
+    // Define a function to check if the button is available
+    function submit() {
+        var button = document.querySelector('input.button.affirmative');
+        if (button) {
+            button.click(); // Click the button if it's available
+            clearInterval(intervalId); // Stop checking once the button is clicked
+        }
+    }
+
+    // Set an interval to check every x ms
+    var intervalId = setInterval(submit, 10);
+}, timeDifference);
